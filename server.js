@@ -1,16 +1,14 @@
-const http = require("http");
-const fs = require("fs");
-const url = require("url");
+const express = require("express");
+const app = express();
+const port = 3000;
 
-function start(route, handle) {
-  function onRequest(request, response) {
-    const pathname = url.parse(request.url).pathname;
-    console.log("Request for " + pathname + " received.");
+app.use(express.static("public"));
 
-    route(handle, pathname, response);
-  }
-  http.createServer(onRequest).listen(3000);
-  console.log("Server has started.");
-}
+// Keep last
+app.get("*", (req, res) => {
+  res.status(404).send(`404: Page Not Found ${req.url}`);
+});
 
-exports.start = start;
+app.listen(port, () => {
+  console.log(`Listening on port ${port}!`);
+});
