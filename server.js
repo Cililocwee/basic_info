@@ -5,7 +5,7 @@ const port = 3000;
 app.use(express.static("public"));
 
 // Keep last
-app.get("*", (req, res) => {
+app.use((req, res) => {
   res.status(404).send(`404: Page Not Found ${req.url}`);
 });
 
